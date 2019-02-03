@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+CREATE_TABLE_SQL='create table debit1(hash char(32) not null primary key, card_no char(16), type varchar(10), date char(8), amount real, desc varchar(256));'
+DB_PATH='db/transaction_records.db'
+DB_BACKUP_PATH='db/transaction_records.db.bak'
+
+# Backup the database if it exists
+if [[ -e "${DB_PATH}" ]]
+then
+  cp "${DB_PATH}" "${DB_BACKUP_PATH}"
+  rm -f "${DB_PATH}"
+fi
+
+# Create database
+sqlite3 "${DB_PATH}" <<< $CREATE_TABLE_SQL

@@ -103,4 +103,5 @@ venv.bak/
 # mypy
 .mypy_cache/
 
-transaction_records.db
+# transaction database
+db/*
