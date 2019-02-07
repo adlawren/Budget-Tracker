@@ -1,6 +1,5 @@
 # TODO
 # - Deprecate strip_whitespace
-# - Abstract json parsing; take an already-parsed json object
 import json
 
 class TransactionRecordMatcher:
@@ -21,14 +20,13 @@ class TransactionRecordMatcher:
             return True
         else:
             return val1 == val2
-    def __init__(self, json_string):
-        parsed_json = json.loads(json_string)
-        self.category = self.safe_call(parsed_json.get('category'), self.strip_whitespace)
-        self.card_no = self.safe_call(parsed_json.get('card_no'), self.strip_whitespace)
-        self.type = self.safe_call(parsed_json.get('type'), self.strip_whitespace)
-        self.date = self.safe_call(parsed_json.get('date'), self.strip_whitespace)
-        self.amount = self.safe_call(parsed_json.get('amount'), float)
-        self.desc = self.safe_call(parsed_json.get('desc'), self.strip_whitespace)
+    def __init__(self, attributes):
+        self.category = self.safe_call(attributes.get('category'), self.strip_whitespace)
+        self.card_no = self.safe_call(attributes.get('card_no'), self.strip_whitespace)
+        self.type = self.safe_call(attributes.get('type'), self.strip_whitespace)
+        self.date = self.safe_call(attributes.get('date'), self.strip_whitespace)
+        self.amount = self.safe_call(attributes.get('amount'), float)
+        self.desc = self.safe_call(attributes.get('desc'), self.strip_whitespace)
     def match(self, transaction_record):
         return (self.safe_compare(
             self.card_no, transaction_record.card_no)

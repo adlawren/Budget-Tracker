@@ -2,14 +2,14 @@ import hashlib
 
 class TransactionRecord:
     @staticmethod
-    def parse(csv_row):
-        return TransactionRecord(csv_row)
-    def __init__(self, csv_row):
-        self.card_no = csv_row[0].strip()
-        self.type = csv_row[1].strip()
-        self.date = csv_row[2].strip()
-        self.amount = float(csv_row[3])
-        self.desc = csv_row[4].strip()
+    def parse(attribute_list):
+        return TransactionRecord(attribute_list)
+    def __init__(self, attribute_list):
+        self.card_no = attribute_list[0].strip()
+        self.type = attribute_list[1].strip()
+        self.date = attribute_list[2].strip()
+        self.amount = float(attribute_list[3])
+        self.desc = attribute_list[4].strip()
     def hash(self):
         m = hashlib.sha256()
         m.update(self.card_no.encode('utf-8'))

@@ -2,3 +2,4 @@
 
 pip install --user matplotlib
 pip install --user pylint
+pip install --user PyYAML
