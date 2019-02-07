@@ -1,9 +1,4 @@
 # TODO
-# - Make a DatabaseManager class; move methods from here to it
-# - Get transaction list from database
-# - Define list of Transaction Categories
-# - Iterate over Transaction list, add each to a Transaction Category
-# - Render the sums for each Transaction Category
 # - Use CLI framework
 # - Unit test the database functions
 # - Test the run scripts when the db/ directory doesn't exist
@@ -32,4 +27,3 @@ if __name__ == '__main__':
     transaction_record_list = TransactionRecordDatabaseManager.get_transaction_records(DB_PATH)
     category_dict = CategoryFilter.filter_categories(transaction_record_list, category_list)
     PieChartRenderer.render(category_dict)
-    #PieChartRenderer.render({ 'Test Category 1' : { 'color' : 'red', 'amount' : 10.0 }, 'Test Category 2' : { 'color' : 'green', 'amount' : 20.0 } })
