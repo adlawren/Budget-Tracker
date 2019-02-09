@@ -18,7 +18,7 @@ class TransactionRecordDatabaseManager:
                   transaction_record.desc)
         cursor.execute(f'insert into {DB_TABLE_NAME} values(?,?,?,?,?,?);', values)
     @staticmethod
-    def import_csv(csv_path, db_path):
+    def import_csv(db_path, csv_path):
         try:
             conn = sqlite3.connect(db_path)
             c = conn.cursor()
