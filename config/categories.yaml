@@ -1,0 +1,17 @@
+---
+sample-category:
+  attributes:
+    color: 'green'
+  matchers:
+    - { desc: 'Sample text' }
+ignored-category:
+  attributes:
+    color: ''
+    show: false
+  matchers:
+    - { desc: 'Ignore me' }
+default:
+  attributes:
+    color: 'blue'
+  matchers:
+    - {}
