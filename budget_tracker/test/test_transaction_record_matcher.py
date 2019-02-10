@@ -54,7 +54,8 @@ class TestTransactionRecordMatcher(unittest.TestCase):
         self.assertTrue(
             self.transaction_record_matcher.safe_equals('123', '123'))
 
-    def test_safe_contains_should_return_true_when_first_param_contains_second_param(self):
+    def test_safe_contains_should_return_true_when_first_param_contains_second_param(
+            self):
         self.assertTrue(
             self.transaction_record_matcher.safe_contains('12', '123'))
 
@@ -62,7 +63,8 @@ class TestTransactionRecordMatcher(unittest.TestCase):
         self.assertFalse(
             self.transaction_record_matcher.safe_equals('123', '321'))
 
-    def test_safe_contains_should_return_false_when_second_param_does_not_contain_first_param(self):
+    def test_safe_contains_should_return_false_when_second_param_does_not_contain_first_param(
+            self):
         self.assertFalse(
             self.transaction_record_matcher.safe_equals('123', '12'))
 
@@ -79,6 +81,7 @@ class TestTransactionRecordMatcher(unittest.TestCase):
         return self.assertTrue(
             self.partially_matching_transaction_record_matcher.match(
                 self.transaction_record))
+
 
 if __name__ == '__main__':
     unittest.main()
