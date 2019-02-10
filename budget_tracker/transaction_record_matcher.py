@@ -1,22 +1,7 @@
-# TODO
-# - Deprecate strip_whitespace
 import json
 
 
 class TransactionRecordMatcher:
-    @staticmethod
-    def strip_whitespace(str):
-        #return str.translate(dict.fromkeys(map(ord, whitespace)))
-        return str.strip()
-
-    @staticmethod
-    def safe_call(param, fn):
-        # Return None if param is None, otherwise return fn result
-        if param is None:
-            return None
-        else:
-            return fn(param)
-
     @staticmethod
     def safe_equals(val1, val2):
         if val1 is None or val2 is None:
@@ -32,17 +17,18 @@ class TransactionRecordMatcher:
             return val1 in val2
 
     def __init__(self, attributes):
-        self.category = self.safe_call(
-            attributes.get('category'), self.strip_whitespace)
-        self.card_no = self.safe_call(
-            attributes.get('card_no'), self.strip_whitespace)
-        self.type = self.safe_call(
-            attributes.get('type'), self.strip_whitespace)
-        self.date = self.safe_call(
-            attributes.get('date'), self.strip_whitespace)
-        self.amount = self.safe_call(attributes.get('amount'), float)
-        self.desc = self.safe_call(
-            attributes.get('desc'), self.strip_whitespace)
+        category = attributes.get('category')
+        self.category = category if category is None else category.strip()
+        card_no = attributes.get('card_no')
+        self.card_no = card_no if card_no is None else card_no.strip()
+        type = attributes.get('type')
+        self.type = type if type is None else type.strip()
+        date = attributes.get('date')
+        self.date = date if date is None else date.strip()
+        amount = attributes.get('amount')
+        self.amount = amount if amount is None else float(amount)
+        desc = attributes.get('desc')
+        self.desc = desc if desc is None else desc.strip()
 
     def match(self, transaction_record):
         return (self.safe_equals(self.card_no, transaction_record.card_no)
