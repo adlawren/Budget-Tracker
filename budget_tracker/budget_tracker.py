@@ -1,10 +1,8 @@
 # TODO
-# - Unit test the database functions
-# - Test the run scripts when the db/ directory doesn't exist
-# - Look into using an ORM with the database
-# - Only process expenses from the last month
-# - Add a ./script/backup script - backup database file to.. somewhere
 # - Address linter output
+# - Look into using an ORM with the database
+# - Add a ./script/backup script - backup database file to.. somewhere
+# - Unit test the database functions
 
 import argparse
 
