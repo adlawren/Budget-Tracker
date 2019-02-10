@@ -16,4 +16,7 @@ class PieChartRenderer:
                 f"{category_name}: {category_dict[category_name]['amount']}")
             colors.append(category_dict[category_name]['color'])
             amounts.append(category_dict[category_name]['amount'])
-        return labels, colors, amounts
+        abs_amounts = []
+        for amount in amounts:
+            abs_amounts.append(abs(amount))
+        return labels, colors, abs_amounts

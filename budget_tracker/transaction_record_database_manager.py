@@ -41,11 +41,19 @@ class TransactionRecordDatabaseManager:
         finally:
             conn.close()
     @staticmethod
+    def get_current_month(cursor):
+        row = cursor.execute(f'select * from {DB_TABLE_NAME} order by date desc limit 1;').fetchone()
+        newest_transaction_record = TransactionRecord(row[1:])
+        return newest_transaction_record.date[0:6]
+    @staticmethod
     def get_transaction_records(db_path):
         conn = sqlite3.connect(db_path)
         c = conn.cursor()
+        current_month = TransactionRecordDatabaseManager.get_current_month(c)
+        date_lower_limit = f'{current_month}00'
+        date_upper_limit = f'{current_month}99'
         transaction_record_list = []
-        for row in c.execute(f'select * from {DB_TABLE_NAME} order by date desc;'):
+        for row in c.execute(f'select * from {DB_TABLE_NAME} where date > ? and date < ? order by date desc;', (date_lower_limit, date_upper_limit)):
             transaction_record_list.append(
                 TransactionRecord(row[1:]))
         return transaction_record_list

@@ -15,11 +15,17 @@ class TransactionRecordMatcher:
         else:
             return fn(param)
     @staticmethod
-    def safe_compare(val1, val2):
+    def safe_equals(val1, val2):
         if val1 is None or val2 is None:
             return True
         else:
             return val1 == val2
+    @staticmethod
+    def safe_contains(val1, val2):
+        if val1 is None or val2 is None:
+            return True
+        else:
+            return val1 in val2
     def __init__(self, attributes):
         self.category = self.safe_call(attributes.get('category'), self.strip_whitespace)
         self.card_no = self.safe_call(attributes.get('card_no'), self.strip_whitespace)
@@ -28,13 +34,13 @@ class TransactionRecordMatcher:
         self.amount = self.safe_call(attributes.get('amount'), float)
         self.desc = self.safe_call(attributes.get('desc'), self.strip_whitespace)
     def match(self, transaction_record):
-        return (self.safe_compare(
+        return (self.safe_equals(
             self.card_no, transaction_record.card_no)
-                and self.safe_compare(
+                and self.safe_equals(
                     self.type, transaction_record.type)
-                and self.safe_compare(
+                and self.safe_equals(
                     self.date, transaction_record.date)
-                and self.safe_compare(
+                and self.safe_equals(
                     self.amount, transaction_record.amount)
-                and self.safe_compare(
+                and self.safe_contains(
                     self.desc, transaction_record.desc))
