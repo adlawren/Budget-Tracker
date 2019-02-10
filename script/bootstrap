@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 
 pip install --user matplotlib
-pip install --user pylint
 pip install --user PyYAML
+pip install --user yapf

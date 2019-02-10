@@ -1,11 +1,14 @@
 import matplotlib.pyplot as plt
 
+
 class PieChartRenderer:
     @staticmethod
     def render(category_dict):
-        labels, colors, amounts = PieChartRenderer.get_chart_arrays(category_dict)
+        labels, colors, amounts = PieChartRenderer.get_chart_arrays(
+            category_dict)
         plt.pie(amounts, labels=labels, colors=colors)
         plt.show()
+
     @staticmethod
     def get_chart_arrays(category_dict):
         colors = []

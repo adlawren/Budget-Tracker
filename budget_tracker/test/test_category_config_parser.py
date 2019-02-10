@@ -3,6 +3,7 @@ import yaml
 
 from ..category_config_parser import CategoryConfigParser
 
+
 class TestCategoryAttributes(unittest.TestCase):
     def test_should_get_categories(self):
         yaml_string = """
@@ -30,6 +31,7 @@ class TestCategoryAttributes(unittest.TestCase):
         self.assertEqual(category2_attributes.color, 'blue')
         category2_matchers = category_list[1]['matchers']
         self.assertEqual(len(category2_matchers), 2)
+
 
 if __name__ == '__main__':
     unittest.main()

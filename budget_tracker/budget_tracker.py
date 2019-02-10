@@ -1,5 +1,4 @@
 # TODO
-# - Address linter output
 # - Look into using an ORM with the database
 # - Integrate proper logging framework
 # - Unit test the database functions
@@ -12,14 +11,19 @@ from category_config_parser import CategoryConfigParser
 from category_filter import CategoryFilter
 from pie_chart_renderer import PieChartRenderer
 
+
 def import_main(db_path, csv_path):
     TransactionRecordDatabaseManager.import_csv(db_path, csv_path)
 
+
 def display_main(db_path, yaml_path):
     category_list = CategoryConfigParser.parse_config_file(yaml_path)
-    transaction_record_list = TransactionRecordDatabaseManager.get_transaction_records(db_path)
-    category_dict = CategoryFilter.filter_categories(transaction_record_list, category_list)
+    transaction_record_list = TransactionRecordDatabaseManager.get_transaction_records(
+        db_path)
+    category_dict = CategoryFilter.filter_categories(transaction_record_list,
+                                                     category_list)
     PieChartRenderer.render(category_dict)
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Budget Tracker')
@@ -28,8 +32,7 @@ if __name__ == '__main__':
         'import', description='Import a CSV into a database')
     import_parser.add_argument(
         '--db', help='Path to SQLite database', required=True)
-    import_parser.add_argument(
-        '--csv', help='Path to CSV', required=True)
+    import_parser.add_argument('--csv', help='Path to CSV', required=True)
     display_parser = subparsers.add_parser(
         'display', description='Display the records from a database')
     display_parser.add_argument(

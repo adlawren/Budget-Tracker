@@ -7,16 +7,16 @@ DB_HASH_COLUMN_NAME = 'hash'
 DB_TABLE_NAME = 'debit1'
 HASH_COLLISION_EXCEPTION_TEXT = f'UNIQUE constraint failed: {DB_TABLE_NAME}.{DB_HASH_COLUMN_NAME}'
 
+
 class TransactionRecordDatabaseManager:
     @staticmethod
     def insert_transaction_record(cursor, transaction_record):
-        values = (transaction_record.hash(),
-                  transaction_record.card_no,
-                  transaction_record.type,
-                  transaction_record.date,
-                  transaction_record.amount,
-                  transaction_record.desc)
-        cursor.execute(f'insert into {DB_TABLE_NAME} values(?,?,?,?,?,?);', values)
+        values = (transaction_record.hash(), transaction_record.card_no,
+                  transaction_record.type, transaction_record.date,
+                  transaction_record.amount, transaction_record.desc)
+        cursor.execute(f'insert into {DB_TABLE_NAME} values(?,?,?,?,?,?);',
+                       values)
+
     @staticmethod
     def import_csv(db_path, csv_path):
         try:
@@ -31,7 +31,9 @@ class TransactionRecordDatabaseManager:
                             c, tr)
                     except sqlite3.IntegrityError as e:
                         if HASH_COLLISION_EXCEPTION_TEXT in e.args[0]:
-                            print('Warning: failed to insert record due to hash collision: {}'.format(tr.str()))
+                            print(
+                                'Warning: failed to insert record due to hash collision: {}'
+                                .format(tr.str()))
                             continue
                         else:
                             raise
@@ -40,11 +42,15 @@ class TransactionRecordDatabaseManager:
             print('Error occurred: {}'.format(e))
         finally:
             conn.close()
+
     @staticmethod
     def get_current_month(cursor):
-        row = cursor.execute(f'select * from {DB_TABLE_NAME} order by date desc limit 1;').fetchone()
+        row = cursor.execute(
+            f'select * from {DB_TABLE_NAME} order by date desc limit 1;'
+        ).fetchone()
         newest_transaction_record = TransactionRecord(row[1:])
         return newest_transaction_record.date[0:6]
+
     @staticmethod
     def get_transaction_records(db_path):
         conn = sqlite3.connect(db_path)
@@ -53,7 +59,8 @@ class TransactionRecordDatabaseManager:
         date_lower_limit = f'{current_month}00'
         date_upper_limit = f'{current_month}99'
         transaction_record_list = []
-        for row in c.execute(f'select * from {DB_TABLE_NAME} where date > ? and date < ? order by date desc;', (date_lower_limit, date_upper_limit)):
-            transaction_record_list.append(
-                TransactionRecord(row[1:]))
+        for row in c.execute(
+                f'select * from {DB_TABLE_NAME} where date > ? and date < ? order by date desc;',
+            (date_lower_limit, date_upper_limit)):
+            transaction_record_list.append(TransactionRecord(row[1:]))
         return transaction_record_list

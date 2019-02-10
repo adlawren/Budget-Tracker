@@ -9,10 +9,13 @@ class CategoryFilter:
                     if matcher.match(transaction_record):
                         category_attributes = category['attributes']
                         if category_attributes.log:
-                            print(f'Note: \'{category_attributes.name}\' category matched: {transaction_record.desc}')
+                            print(
+                                f'Note: \'{category_attributes.name}\' category matched: {transaction_record.desc}'
+                            )
                         if category_attributes.show:
                             if category_attributes.name in category_dict:
-                                category_dict[category_attributes.name]['amount'] += transaction_record.amount
+                                category_dict[category_attributes.name][
+                                    'amount'] += transaction_record.amount
                             else:
                                 category_dict[category_attributes.name] = {
                                     'color': category_attributes.color,
