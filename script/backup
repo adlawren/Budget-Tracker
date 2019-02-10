@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+BACKUP_PATH='.'
+CONFIG_NAME='categories'
+CONFIG_PATH="config/${CONFIG_NAME}.yaml"
+DB_NAME='transaction_records'
+DB_PATH="db/${DB_NAME}.db"
+
+if [[ -n "$@" ]]
+then
+    BACKUP_PATH="$@"
+fi
+
+if [[ -e "${DB_PATH}" ]]
+then
+    cp "${DB_PATH}" "${BACKUP_PATH}/${DB_NAME}.db.bak"
+fi
+
+if [[ -e "${CONFIG_PATH}" ]]
+then
+    cp "${CONFIG_PATH}" "${BACKUP_PATH}/${CONFIG_NAME}.yaml.bak"
+fi

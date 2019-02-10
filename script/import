@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+python budget_tracker/budget_tracker.py import --db db/transaction_records.db --csv "$@"

@@ -1,7 +1,7 @@
 # TODO
 # - Address linter output
 # - Look into using an ORM with the database
-# - Add a ./script/backup script - backup database file to.. somewhere
+# - Integrate proper logging framework
 # - Unit test the database functions
 
 import argparse
