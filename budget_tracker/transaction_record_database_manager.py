@@ -49,7 +49,16 @@ class TransactionRecordDatabaseManager:
             f'select * from {DB_TABLE_NAME} order by date desc limit 1;'
         ).fetchone()
         newest_transaction_record = TransactionRecord(row[1:])
-        return newest_transaction_record.date[0:6]
+        newest_transaction_record_year = newest_transaction_record.date[0:4]
+        newest_transaction_record_month = newest_transaction_record.date[4:6]
+        if newest_transaction_record_month == '01':
+            # Wrap year
+            return f'{int(newest_transaction_record_year) - 1}12'
+        else:
+            updated_month = str(int(newest_transaction_record_month) - 1)
+            padded_updated_month = updated_month if len(
+                updated_month) is 2 else f'0{updated_month}'
+            return f'{newest_transaction_record_year}{padded_updated_month}'
 
     @staticmethod
     def get_transaction_records(db_path):
